@@ -1,15 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { AppContainer } from 'react-hot-loader'
+import App from './components/App'
 
-class App extends React.Component {
+ReactDOM.render(
+  <AppContainer>
+    <App/>
+  </AppContainer>,
+  document.getElementById('root')
+);
 
-  render(){
-    return(
-      <div>
-        <h1>Hello from React!</h1>
-      </div>
-    )
-  }
+// Hot Module Replacement API
+if (module.hot) {
+  module.hot.accept('./components/App', () => {
+    const NextApp = require('./components/App').default;
+    ReactDOM.render(
+      <AppContainer>
+        <NextApp/>
+      </AppContainer>,
+      document.getElementById('root')
+    );
+  });
 }
-
-ReactDOM.render(<App />, document.getElementById('root'));

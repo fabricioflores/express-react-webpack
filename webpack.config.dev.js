@@ -1,8 +1,11 @@
 import path from 'path'
+import webpack from 'webpack'
 
 export default {
   devtool: 'inline-source-map',
   entry: [
+    'react-hot-loader/patch',
+    'webpack-hot-middleware/client',
     path.resolve(__dirname, 'src/index.js')
   ],
   target: 'web',
@@ -21,4 +24,7 @@ export default {
         },
     }],
   },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ]
 }
