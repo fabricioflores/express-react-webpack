@@ -25,20 +25,30 @@ mongoose.connection.once('open', function() {
     console.log('Mongodb connection success!!');
 });
 
-app.use(require('webpack-dev-middleware')(compiler, {
-    noInfo: true,
-    publicPath: config.output.publicPath
-}));
-app.use(require("webpack-hot-middleware")(compiler));
+if (process.env.NODE_ENV !== 'test') {
+    app.use(require('webpack-dev-middleware')(compiler, {
+        noInfo: true,
+        publicPath: config.output.publicPath
+    }));
+    app.use(require("webpack-hot-middleware")(compiler));
+}
+
+app.get('/user', function(req, res) {
+    res.status(200).json({ name: 'tobi' });
+});
 
 app.listen(port, function (error) {
     if(error) {
         console.log(error);
     } else {
-        open(`http://localhost:${port}`)
+        if (process.env.NODE_ENV !== 'test') {
+            open(`http://localhost:${port}`)
+        }
     }
 });
 
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, '../src/index.html'));
 });
+
+export default app;
