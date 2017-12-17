@@ -2,9 +2,10 @@ import express from 'express';
 import path from 'path';
 import open from 'open';
 import mongoose from 'mongoose';
-
 import webpack from 'webpack';
 import config from '../webpack.config.dev';
+
+/* eslint-disable no-console */
 
 const port = 3000;
 const mongoURL = process.env.MONGO_URL || 'mongodb://localhost:27017/coupon-db';
