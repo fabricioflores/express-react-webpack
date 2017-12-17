@@ -1,9 +1,10 @@
 import express from 'express';
-import path from 'path';
 import open from 'open';
 import mongoose from 'mongoose';
 import webpack from 'webpack';
 import config from '../webpack.config.dev';
+import home from './routes/home';
+import user from './routes/user';
 
 /* eslint-disable no-console */
 
@@ -11,6 +12,8 @@ const port = 3000;
 const mongoURL = process.env.MONGO_URL || 'mongodb://localhost:27017/coupon-db';
 const app = express();
 const compiler = webpack(config);
+
+let v1 = express.Router()
 
 mongoose.Promise = global.Promise;
 
@@ -33,22 +36,31 @@ if (process.env.NODE_ENV !== 'test') {
     app.use(require("webpack-hot-middleware")(compiler));
 }
 
-app.get('/user', function(req, res) {
-    res.status(200).json({ name: 'tobi' });
-});
+// Api routes
+v1.use('/', home);
+v1.use('/user', user);
+
+// Api version
+app.use('/v1', v1);
+// Default API Version
+app.use('/', v1);
+
+// catch 404 and forward to error handler
+app.use((req, res) => {
+    res.status(404).json({
+        message: 'Route not found'
+    })
+})
 
 app.listen(port, function (error) {
     if(error) {
         console.log(error);
     } else {
+        console.log(`Express App running on port ${port}`);
         if (process.env.NODE_ENV !== 'test') {
             open(`http://localhost:${port}`)
         }
     }
-});
-
-app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, '../src/index.html'));
 });
 
 export default app;
