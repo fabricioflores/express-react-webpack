@@ -1,13 +1,28 @@
 import express from 'express';
 import path from 'path';
 import open from 'open';
+import mongoose from 'mongoose';
 
 import webpack from 'webpack';
 import config from '../webpack.config.dev';
 
 const port = 3000;
+const mongoURL = process.env.MONGO_URL || 'mongodb://localhost:27017/coupon-db';
 const app = express();
 const compiler = webpack(config);
+
+mongoose.Promise = global.Promise;
+
+mongoose.connect(mongoURL, { useMongoClient: true }, (error) => {
+    if (error) {
+        console.error('Please make sure Mongodb is installed and running!');
+        throw error;
+    }
+});
+
+mongoose.connection.once('open', function() {
+    console.log('Mongodb connection success!!');
+});
 
 app.use(require('webpack-dev-middleware')(compiler, {
     noInfo: true,
