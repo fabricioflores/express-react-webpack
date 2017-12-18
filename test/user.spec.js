@@ -1,7 +1,7 @@
 import test from 'ava';
 import { connectDB, dropDB } from './mocks/db';
 import request from 'supertest';
-import app from '../buildScripts/server';
+import app from '../server/server';
 
 test.beforeEach('connect with mongodb', t => {
   connectDB(t, (err) => {

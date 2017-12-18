@@ -6,11 +6,11 @@ export default {
   entry: [
     'react-hot-loader/patch',
     'webpack-hot-middleware/client',
-    path.resolve(__dirname, 'src/index.js')
+    path.resolve(__dirname, 'client/index.js')
   ],
   target: 'web',
   output: {
-    path: path.resolve(__dirname, 'src'),
+    path: path.resolve(__dirname, 'client'),
     publicPath: '/',
     filename: 'bundle.js'
   },

@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm-run-all --parallel open:src lint:watch",
-    "open:src": "nodemon --exec babel-node buildScripts/server.js",
-    "lint": "esw webpack.config.* src buildScripts --color",
+    "start": "npm-run-all --parallel open:client lint:watch",
+    "open:client": "nodemon --exec babel-node server/server.js",
+    "lint": "esw webpack.config.* client server --color",
     "lint:watch": "npm run lint -- --watch",
     "test": "cross-env NODE_ENV=test npm run lint && node_modules/.bin/ava",
     "test:watch": "npm run test -- --watch"
@@ -56,7 +56,7 @@
       "test/**/*.spec.js"
     ],
     "source": [
-      "buildScripts/**/*.js"
+      "server/**/*.js"
     ],
     "failFast": true,
     "babel": "inherit",
