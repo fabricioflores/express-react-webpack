@@ -1,5 +1,5 @@
 import express from 'express';
-import open from 'open';
+//import open from 'open';
 import mongoose from 'mongoose';
 import webpack from 'webpack';
 import config from '../webpack.config.dev';
@@ -58,7 +58,7 @@ app.listen(port, function (error) {
     } else {
         console.log(`Express App running on port ${port}`);
         if (process.env.NODE_ENV !== 'test') {
-            open(`http://localhost:${port}`)
+            //open(`http://localhost:${port}`)
         }
     }
 });
